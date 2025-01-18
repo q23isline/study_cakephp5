@@ -25,7 +25,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '__SALT__'),
+        'salt' => env('SECURITY_SALT', '25249bef0309e62b292e4d8bfd924fa59e30e869f2b7742bfc8dce7dd1013f73'),
     ],
 
     /*
@@ -36,18 +36,18 @@ return [
      */
     'Datasources' => [
         'default' => [
-            'host' => 'localhost',
+            'host' => 'db',
             /*
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
-            //'port' => 'non_standard_port_number',
+            'port' => '1433',
 
-            'username' => 'my_app',
-            'password' => 'secret',
+            'username' => 'sa',
+            'password' => 'Passw0rd',
 
-            'database' => 'my_app',
+            'database' => 'StudyCakePHP',
             /*
              * If not using the default 'public' schema with the PostgreSQL driver
              * set it here.
@@ -58,6 +58,10 @@ return [
              * You can use a DSN string to set the entire configuration
              */
             'url' => env('DATABASE_URL', null),
+
+            // DB にアクセスできないのでローカルでは証明書の検証を無効にする
+            // 本番などでは自己署名証明書を使用するなどで回避する
+            'trustServerCertificate' => true,
         ],
 
         /*
