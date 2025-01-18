@@ -1,5 +1,72 @@
 # CakePHP Application Skeleton
 
+## バックエンド開発ガイドライン
+
+### コーディング標準チェック単体実行
+
+```bash
+# フォーマッターチェック実行
+docker compose exec backend ./vendor/bin/phpcs --colors -p src/
+# フォーマッター自動整形実行
+docker compose exec backend ./vendor/bin/phpcbf src/
+# コード静的解析実行
+docker compose exec backend ./vendor/bin/phpstan analyse
+```
+
+### パッケージをインストールする
+
+インストール済のパッケージは `backend/composer.json` 参照
+
+パッケージ一覧
+
+<https://packagist.org/>
+
+```bash
+docker compose exec backend php composer.phar require ｛パッケージ名｝
+# PHPStan を開発用にインストールする例
+# docker compose exec backend php composer.phar require --dev phpstan/phpstan
+
+# インストールしたパッケージに実行権限を含めた全権限を与える
+sudo chmod -R 777 backend/vendor
+```
+
+### マイグレーションファイルを生成する
+
+```bash
+docker compose exec backend bin/cake bake migration Create｛テーブル名｝ ｛カラム名｝:｛型名｝
+# products テーブルを追加する例
+# docker compose exec backend bin/cake bake migration CreateProducts name:string description:text created modified
+
+# マイグレーションファイルを DB のテーブルに反映させる
+docker compose exec backend bin/cake migrations migrate
+```
+
+<https://book.cakephp.org/migrations/3/ja/index.html#id5>
+
+### 既存のデータベースからマイグレーションファイルを作成する
+
+```bash
+docker compose exec backend bin/cake bake migration_snapshot Initial
+```
+
+<https://book.cakephp.org/migrations/3/ja/index.html#id15>
+
+### コードを自動生成する
+
+#### MVC を自動生成する
+
+```bash
+docker compose exec backend bin/cake bake all ｛MVCを生成したいリソース名｝
+# user テーブルを元に MVC を生成する例
+# docker compose exec backend bin/cake bake all users
+```
+
+Model のみ、Controller のみ、 View のみを自動生成する例
+
+<https://book.cakephp.org/5/ja/tutorials-and-examples/cms/tags-and-users.html>
+
+---
+
 ![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
