@@ -1,0 +1,40 @@
+{
+    "[php]": {
+        "editor.defaultFormatter": "mtbdata.vscode-phpsab-docker"
+    },
+    "editor.formatOnSave": true,
+    "phpstan.singleFileMode": true,
+    "phpstan.binPath": "backend/vendor/bin/phpstan",
+    "phpstan.binCommand": [],
+    "phpstan.configFile": "backend/phpstan.neon",
+    "phpstan.paths": {
+        "backend": "/src"
+    },
+    "phpstan.dockerContainerName": "backend",
+    "phpstan.rootDir": "",
+    "phpstan.options": [],
+    "phpstan.enableStatusBar": true,
+    "phpstan.memoryLimit": "1G",
+    "phpstan.enabled": true,
+    "phpstan.projectTimeout": 300000,
+    "phpstan.timeout": 300000,
+    "phpstan.suppressTimeoutMessage": false,
+    "phpstan.showProgress": false,
+    "phpstan.showTypeOnHover": false,
+    "phpstan.enableLanguageServer": false,
+    "phpstan.ignoreErrors": [
+        "Xdebug: .*"
+    ],
+    "phpstan.suppressWorkspaceMessage": false,
+    "phpstan.pro": false,
+    "phpstan.tmpDir": "",
+    "phpstan.checkValidity": false,
+    "phpsab.docker.dockerEnabled": true,
+    "phpsab.docker.dockerContainer": "backend",
+    "phpsab.docker.dockerWorkspaceRoot": "/src",
+    "phpsab.docker.dockerExecutablePathCBF": "/src/vendor/bin/phpcbf",
+    "phpsab.docker.dockerExecutablePathCS": "/src/vendor/bin/phpcs",
+    "phpsab.docker.autoRulesetSearch": false,
+    "phpsab.docker.standard": "CakePHP",
+    "php-docblocker.useShortNames": true
+}

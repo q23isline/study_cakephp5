@@ -8,4 +8,6 @@
 # VSCode 設定
 !/.vscode/
 /.vscode/*
+!/.vscode/extensions.json.default
 !/.vscode/launch.json.default
+!/.vscode/settings.json.default

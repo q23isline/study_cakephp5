@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "EditorConfig.EditorConfig",
+    "xdebug.php-debug",
+    "neilbrayfield.php-docblocker",
+    "bmewburn.vscode-intelephense-client",
+    "mtbdata.vscode-phpsab-docker",
+    "SanderRonde.phpstan-vscode"
+  ]
+}
