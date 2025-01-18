@@ -41,6 +41,11 @@ RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
 RUN docker-php-ext-enable pdo_sqlsrv
 
+# デバッグ実行できるようにする
+# https://xdebug.org/docs/install#pecl
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
 RUN apt clean
 RUN rm -rf /var/lib/apt/lists/*
 
