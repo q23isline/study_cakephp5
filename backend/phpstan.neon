@@ -1,7 +1,8 @@
 parameters:
     level: 8
     treatPhpDocTypesAsCertain: false
-    checkGenericClassInNonGenericObjectType: false
+    # PHPStan 2系では以下のパラメータはなくなったためコメント化
+    # checkGenericClassInNonGenericObjectType: false
     bootstrapFiles:
         - config/bootstrap.php
     paths:
