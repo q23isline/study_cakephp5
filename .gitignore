@@ -4,3 +4,8 @@
 !/logs/db/
 /logs/db/*
 !/logs/db/.gitkeep
+
+# VSCode 設定
+!/.vscode/
+/.vscode/*
+!/.vscode/launch.json.default
