@@ -3,6 +3,8 @@ FROM php:8.4.3-fpm
 
 ENV TZ=Asia/Tokyo
 
+WORKDIR /var/www/html
+
 RUN apt update
 
 # Composer システム要件
@@ -40,6 +42,24 @@ RUN apt install -y unixodbc-dev
 RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
 RUN docker-php-ext-enable pdo_sqlsrv
+
+# LibXL インストール
+# https://www.libxl.com/php.html
+RUN curl -OL https://www.libxl.com/download/libxl-lin-4.5.1.tar.gz
+RUN tar zxvf libxl-lin-4.5.1.tar.gz
+RUN apt install -y git
+# 公式だと make コマンドでエラーになる。
+# RUN git clone https://github.com/iliaal/php_excel.git
+# 公式からフォークされたリポジトリを利用すると make は通るが make test で 40% のテストが失敗する。
+RUN git clone -b php7_with_pulls https://github.com/Jan-E/php_excel.git
+WORKDIR /var/www/html/php_excel
+RUN phpize
+RUN ./configure --with-libxl-incdir=../libxl-4.5.1/include_c --with-libxl-libdir=../libxl-4.5.1/lib64 --with-libxml-dir=/usr/include/libxml2
+RUN make
+RUN make test
+RUN make install
+WORKDIR /var/www/html
+RUN rm libxl-lin-4.5.1.tar.gz
 
 # デバッグ実行できるようにする
 # https://xdebug.org/docs/install#pecl
