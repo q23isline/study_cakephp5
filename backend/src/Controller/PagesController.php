@@ -17,10 +17,15 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Cake\Http\CallbackStream;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 use Cake\View\Exception\MissingTemplateException;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Tcpdf;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Static content controller
@@ -61,6 +66,24 @@ class PagesController extends AppController
         }
         $this->set(compact('page', 'subpage'));
 
+        // エクセルでダウンロードする場合
+        // return $this->exportSampleExcel();
+
+        // PDF でダウンロードする場合
+        // return $this->exportSamplePdf();
+
+        // エクセルダウンロード、PDF ダウンロード試すときはコメントにする
+        return $this->renderDisplay($path);
+    }
+
+    /**
+     * 画面表示
+     *
+     * @param array<string> $path
+     * @return \Cake\Http\Response
+     */
+    private function renderDisplay(array $path): Response
+    {
         try {
             return $this->render(implode('/', $path));
         } catch (MissingTemplateException $exception) {
@@ -69,5 +92,58 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
+    }
+
+    /**
+     * エクセル出力する
+     *
+     * @return \Cake\Http\Response
+     * @see https://phpspreadsheet.readthedocs.io/en/latest/
+     * @phpstan-ignore method.unused
+     */
+    private function exportSampleExcel(): Response
+    {
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'Hello World !');
+
+        $writer = new Xlsx($spreadsheet);
+        $stream = new CallbackStream(function () use ($writer): void {
+            $writer->save('php://output');
+        });
+
+        $encodedName = rawurlencode('hello world.xlsx');
+
+        return $this->response->withType('xlsx')
+            ->withHeader('Content-Disposition', "attachment;filename*=UTF-8''{$encodedName}")
+            ->withBody($stream);
+    }
+
+    /**
+     * PDF 出力する
+     *
+     * @return \Cake\Http\Response
+     * @see https://phpspreadsheet.readthedocs.io/en/latest/
+     * @see https://tcpdf.org/
+     * @phpstan-ignore method.unused
+     */
+    private function exportSamplePdf(): Response
+    {
+        IOFactory::registerWriter('Pdf', Tcpdf::class);
+
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'Hello World !');
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Pdf');
+        $stream = new CallbackStream(function () use ($writer): void {
+            $writer->save('php://output');
+        });
+
+        $encodedName = rawurlencode('hello world.pdf');
+
+        return $this->response->withType('pdf')
+            ->withHeader('Content-Disposition', "attachment;filename*=UTF-8''{$encodedName}")
+            ->withBody($stream);
     }
 }
