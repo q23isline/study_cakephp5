@@ -4,6 +4,9 @@
 !/logs/db/
 /logs/db/*
 !/logs/db/.gitkeep
+!/logs/frontend/
+/logs/frontend/*
+!/logs/frontend/.gitkeep
 
 # VSCode 設定
 !/.vscode/
