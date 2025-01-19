@@ -9,10 +9,14 @@
 [![PHP](https://img.shields.io/static/v1?logo=php&label=PHP&message=v8.4.3&labelColor=555555&color=777BB4&logoColor=777BB4)](https://www.php.net)
 [![CakePHP](https://img.shields.io/static/v1?logo=cakephp&label=CakePHP&message=v5.1.5&labelColor=555555&color=D33C43&logoColor=D33C43)](https://cakephp.org)
 [![SQL Server](https://img.shields.io/static/v1?label=SQL%20Server&message=v2022&labelColor=555555&color=FFFFFF&logoColor=FFFFFF)](https://learn.microsoft.com/ja-jp/sql/sql-server/)
+[![Node.js](https://img.shields.io/static/v1?logo=node.js&label=Node.js&message=v22.12.0&labelColor=555555&color=339933&logoColor=339933)](https://nodejs.org)
+[![npm](https://img.shields.io/static/v1?logo=npm&label=npm&message=v10.9.0&labelColor=555555&color=CB3837&logoColor=CB3837)](https://www.npmjs.com/)
+[![Vue.js](https://img.shields.io/static/v1?logo=vue.js&label=Vue.js&message=v3.13.0&labelColor=555555&color=4FC08D&logoColor=4FC08D)](https://ja.vuejs.org/)
 
 CakePHP 5 勉強用リポジトリ
 
 - [バックエンド開発ガイドライン](./backend/README.md)
+- [フロントエンド開発ガイドライン](./frontend/README.md)
 
 ## 前提
 
@@ -54,7 +58,8 @@ CakePHP 5 勉強用リポジトリ
     sudo chmod -R ugo+rw ./
     docker compose up -d
     docker compose exec backend php composer.phar install
-    sudo chmod -R 777 backend/vendor
+    docker compose exec frontend npm install
+    sudo chmod -R 777 backend/vendor frontend/node_modules
     ```
 
 ## 日常的にやること
@@ -66,11 +71,14 @@ CakePHP 5 勉強用リポジトリ
 docker compose up -d
 # バックエンド起動
 docker compose exec backend bin/cake server -H 0.0.0.0
+# フロントエンド起動
+docker compose exec frontend npm run dev -- --host
 ```
 
 ### システム終了
 
 ```bash
+# フロントエンド起動ターミナルで Ctrl + c
 # バックエンド起動ターミナルで Ctrl + c
 
 docker compose down
@@ -84,13 +92,17 @@ docker compose down
 
 <http://localhost:8765/>
 
+#### フロントエンド
+
+<http://localhost:5173/>
+
 ## Permission Deniedエラーが出た時の解決方法
 
 ```bash
 # プロジェクト全体のファイルすべてに読み込み、書き込み権限を与える
 sudo chmod -R ugo+rw ./
 # インストールしたライブラリに実行権限を含めた全権限を与える
-sudo chmod -R 777 backend/vendor
+sudo chmod -R 777 backend/vendor frontend/node_modules
 ```
 
 ## データベースへの接続
@@ -105,6 +117,8 @@ sudo chmod -R 777 backend/vendor
 
 ## ログ出力場所
 
-| サービス   | ログ出力場所 |
-| ---------- | ------------ |
-| SQL Server | logs/db      |
+| サービス   | ログ出力場所  |
+| ---------- | ------------- |
+| CakePHP    | backend/logs  |
+| SQL Server | logs/db       |
+| Node.js    | logs/frontend |

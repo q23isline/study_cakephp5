@@ -1,5 +1,47 @@
 # study-cakephp5
 
+## フロントエンド開発ガイドライン
+
+### コーディング標準チェック単体実行
+
+```bash
+# フォーマッターチェック実行
+docker compose exec frontend npm run format-check
+# フォーマッター自動整形実行
+docker compose exec frontend npm run format
+# コード静的解析実行
+docker compose exec frontend npm run type-check
+# コード静的解析実行
+docker compose exec frontend npm run lint
+```
+
+### ビルドする
+
+```bash
+docker compose exec frontend npm run build
+# ビルド結果のファイルたちに Linux の読み取り・書き込み権限を与える
+sudo chmod -R ogu+rw frontend/dist
+```
+
+### ライブラリをインストールする
+
+インストール済のライブラリは `frontend/package.json` 参照
+
+ライブラリ一覧
+
+<https://www.npmjs.com/>
+
+```bash
+docker compose exec frontend npm install ｛ライブラリ名｝
+# axios をインストールする例
+# docker compose exec frontend npm install axios
+
+# インストールしたライブラリに実行権限を含めた全権限を与える
+sudo chmod -R 777 frontend/node_modules
+```
+
+---
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
