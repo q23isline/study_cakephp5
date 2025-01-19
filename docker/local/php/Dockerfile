@@ -41,6 +41,13 @@ RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
 RUN docker-php-ext-enable pdo_sqlsrv
 
+# PHPSpreadSheet を動かせるようにする
+# https://phpspreadsheet.readthedocs.io/en/latest/
+# https://www.php.net/manual/ja/image.installation.php
+RUN apt install -y libpng-dev libjpeg-dev libfreetype6-dev
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-install gd
+
 # デバッグ実行できるようにする
 # https://xdebug.org/docs/install#pecl
 RUN pecl install xdebug
