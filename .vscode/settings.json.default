@@ -36,5 +36,15 @@
     "phpsab.docker.dockerExecutablePathCS": "/src/vendor/bin/phpcs",
     "phpsab.docker.autoRulesetSearch": false,
     "phpsab.docker.standard": "CakePHP",
-    "php-docblocker.useShortNames": true
+    "php-docblocker.useShortNames": true,
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "tsconfig.json": "tsconfig.*.json, env.d.ts",
+        "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
+        "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

@@ -6,6 +6,9 @@
     "neilbrayfield.php-docblocker",
     "bmewburn.vscode-intelephense-client",
     "mtbdata.vscode-phpsab-docker",
-    "SanderRonde.phpstan-vscode"
+    "SanderRonde.phpstan-vscode",
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ]
 }
