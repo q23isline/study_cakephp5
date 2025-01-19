@@ -93,4 +93,9 @@ return function (RouteBuilder $routes): void {
      * });
      * ```
      */
+    $routes->scope('/api/v1', ['prefix' => 'Api/V1'], function (RouteBuilder $builder): void {
+        $builder->setExtensions(['json']);
+
+        $builder->get('/sample-users', ['controller' => 'SampleUserListGet', 'action' => 'invoke']);
+    });
 };
