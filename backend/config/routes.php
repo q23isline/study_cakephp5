@@ -98,6 +98,8 @@ return function (RouteBuilder $routes): void {
 
         $builder->get('/csrf-token', ['controller' => 'CsrfTokenGet', 'action' => 'invoke']);
 
+        $builder->post('/files/to-text', ['controller' => 'FilesToText', 'action' => 'invoke']);
+
         $builder->get('/sample-users', ['controller' => 'SampleUserListGet', 'action' => 'invoke']);
         $builder->post('/sample-users', ['controller' => 'SampleUserAdd', 'action' => 'invoke']);
         $builder->get('/sample-users/{id}', ['controller' => 'SampleUserGet', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);

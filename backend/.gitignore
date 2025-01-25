@@ -69,3 +69,6 @@ nbproject/*
 # yarn
 yarn-debug.log
 yarn-error.log
+
+# ファイルダウンロード用
+/webroot/file/*
