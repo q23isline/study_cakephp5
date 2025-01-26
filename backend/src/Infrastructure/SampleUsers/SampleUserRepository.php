@@ -87,4 +87,28 @@ final class SampleUserRepository
 
         return $result;
     }
+
+    /**
+     * DB へユーザー保存
+     *
+     * @param array{type: string, name: string, birthDay: \DateTime, height: string, gender: string} $command
+     * @return int
+     */
+    public function saveUser(array $command): int
+    {
+        $saveData = [
+            'Users' => [
+                'name' => $command['name'],
+                'birth_day' => $command['birthDay']->format('Y-m-d'),
+                'height' => $command['height'],
+                'gender' => $command['gender'],
+            ],
+        ];
+
+        // 実際はモデルを利用してデータを保存する
+        $saveData = $saveData;
+
+        // 保存後に採番された ID を返す
+        return 1;
+    }
 }
