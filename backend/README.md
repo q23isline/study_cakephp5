@@ -13,6 +13,24 @@ docker compose exec backend ./vendor/bin/phpcbf src/
 docker compose exec backend ./vendor/bin/phpstan analyse
 ```
 
+### Postman による API の動作確認
+
+- ヘッダータブに以下を設定
+
+| KEY    | VALUE            |
+| ------ | ---------------- |
+| Cookie | csrfToken=xxxxxx |
+
+※ デベロッパーツール > ネットワークタブ > リクエスト行 > ヘッダータブ > リクエストヘッダーアコーディオン > Cookie から取得する
+
+- 【GET以外の場合】追加でヘッダータブに以下を設定
+
+| KEY          | VALUE  |
+| ------------ | ------ |
+| X-CSRF-Token | yyyyyy |
+
+※ 画面の HTML を表示し、input タグの name が _csrfToken の value （ ↑ とは異なる値）
+
 ### パッケージをインストールする
 
 インストール済のパッケージは `backend/composer.json` 参照
