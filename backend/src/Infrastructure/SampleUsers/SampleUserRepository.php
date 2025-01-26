@@ -50,4 +50,41 @@ final class SampleUserRepository
 
         return $result;
     }
+
+    /**
+     * ユーザーが存在するか
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function isExistUser(int $id): bool
+    {
+        // 実際はモデルを利用してデータを取得する
+        $record = $id;
+        $record = $record;
+
+        return true;
+    }
+
+    /**
+     * DB へユーザー取得
+     *
+     * @param int $id
+     * @return array{id: int, name: string, birthDay: \DateTime, height: string, gender: string}
+     */
+    public function findUser(int $id): array
+    {
+        // 実際はモデルを利用してデータを取得する
+        $record = $id;
+
+        $result = [
+            'id' => (int)($record['id'] ?? 1),
+            'name' => (string)($record['name'] ?? '田中 太郎'),
+            'birthDay' => new DateTime($record['birth_day'] ?? '2000-01-01'),
+            'height' => (string)($record['height'] ?? '170.0'),
+            'gender' => (string)($record['gender'] ?? '1'),
+        ];
+
+        return $result;
+    }
 }
