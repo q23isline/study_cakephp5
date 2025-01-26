@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\SampleUsers;
 
 use DateTime;
+use Exception;
 
 final class SampleUserRepository
 {
@@ -131,5 +132,21 @@ final class SampleUserRepository
 
         // 実際はモデルを利用してデータを保存する
         $saveData = $saveData;
+    }
+
+    /**
+     * DB へユーザー削除
+     *
+     * @param int $id
+     * @return void
+     */
+    public function deleteUser(int $id): void
+    {
+        // 実際はモデルを利用してデータを削除する
+        $result = $id;
+
+        if (!$result) {
+            throw new Exception('削除に失敗しました。');
+        }
     }
 }

@@ -100,5 +100,6 @@ return function (RouteBuilder $routes): void {
         $builder->post('/sample-users', ['controller' => 'SampleUserAdd', 'action' => 'invoke']);
         $builder->get('/sample-users/{id}', ['controller' => 'SampleUserGet', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);
         $builder->patch('/sample-users/{id}', ['controller' => 'SampleUserUpdate', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);
+        $builder->delete('/sample-users/{id}', ['controller' => 'SampleUserDelete', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);
     });
 };
