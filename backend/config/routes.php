@@ -99,5 +99,6 @@ return function (RouteBuilder $routes): void {
         $builder->get('/sample-users', ['controller' => 'SampleUserListGet', 'action' => 'invoke']);
         $builder->post('/sample-users', ['controller' => 'SampleUserAdd', 'action' => 'invoke']);
         $builder->get('/sample-users/{id}', ['controller' => 'SampleUserGet', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);
+        $builder->patch('/sample-users/{id}', ['controller' => 'SampleUserUpdate', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);
     });
 };

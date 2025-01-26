@@ -111,4 +111,25 @@ final class SampleUserRepository
         // 保存後に採番された ID を返す
         return 1;
     }
+
+    /**
+     * DB へユーザー更新
+     *
+     * @param array{type: string, id: int, name: string, birthDay: \DateTime, height: string, gender: string} $command
+     * @return void
+     */
+    public function updateUser(array $command): void
+    {
+        $saveData = [
+            'Users' => [
+                'name' => $command['name'],
+                'birth_day' => $command['birthDay']->format('Y-m-d'),
+                'height' => $command['height'],
+                'gender' => $command['gender'],
+            ],
+        ];
+
+        // 実際はモデルを利用してデータを保存する
+        $saveData = $saveData;
+    }
 }
