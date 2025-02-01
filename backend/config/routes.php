@@ -96,6 +96,8 @@ return function (RouteBuilder $routes): void {
     $routes->scope('/api/v1', ['prefix' => 'Api/V1'], function (RouteBuilder $builder): void {
         $builder->setExtensions(['json']);
 
+        $builder->get('/csrf-token', ['controller' => 'CsrfTokenGet', 'action' => 'invoke']);
+
         $builder->get('/sample-users', ['controller' => 'SampleUserListGet', 'action' => 'invoke']);
         $builder->post('/sample-users', ['controller' => 'SampleUserAdd', 'action' => 'invoke']);
         $builder->get('/sample-users/{id}', ['controller' => 'SampleUserGet', 'action' => 'invoke'])->setPatterns(['id' => '[0-9]+']);
