@@ -7,3 +7,8 @@ parameters:
         - config/bootstrap.php
     paths:
         - src/
+    ignoreErrors:
+        # bin/cake bake model でコード生成するとエラーがでるので無視する
+        -
+            identifier: missingType.iterableValue
+            path: src/Model/Table/
