@@ -60,6 +60,8 @@ CakePHP 5 勉強用リポジトリ
     docker compose exec backend php composer.phar install
     docker compose exec frontend npm install
     sudo chmod -R 777 backend/vendor frontend/node_modules
+    docker compose exec backend bin/cake migrations migrate
+    docker compose exec backend bin/cake migrations seed
     ```
 
 ## 日常的にやること
