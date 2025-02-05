@@ -28,8 +28,7 @@ class AddApplicationService
      */
     public function handle(array $command): array
     {
-        $id = $this->sampleUserRepository->saveUser($command);
-        $result = $this->sampleUserRepository->findUser($id);
+        $result = $this->sampleUserRepository->saveUser($command);
 
         return $result;
     }

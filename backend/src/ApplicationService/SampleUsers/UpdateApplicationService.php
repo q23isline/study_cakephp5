@@ -35,8 +35,7 @@ class UpdateApplicationService
             throw new NotFoundException([new ExceptionItem('', '', 'サンプルユーザーが存在しません。')]);
         }
 
-        $this->sampleUserRepository->updateUser($command);
-        $result = $this->sampleUserRepository->findUser($command['id']);
+        $result = $this->sampleUserRepository->updateUser($command);
 
         return $result;
     }

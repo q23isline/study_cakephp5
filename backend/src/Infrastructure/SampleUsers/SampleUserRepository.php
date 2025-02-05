@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\SampleUsers;
 
+use App\Model\Entity\SampleUser;
 use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 use DateTime;
@@ -62,13 +63,7 @@ final class SampleUserRepository
 
         $result = [];
         foreach ($records as $record) {
-            $result[] = [
-                'id' => $record->id,
-                'name' => $record->name,
-                'birthDay' => new DateTime($record->birth_day->format('Y-m-d')),
-                'height' => $record->height,
-                'gender' => $record->gender,
-            ];
+            $result[] = $this->buildEntity($record);
         }
 
         return $result;
@@ -108,24 +103,16 @@ final class SampleUserRepository
         $model = TableRegistry::getTableLocator()->get('SampleUsers');
         $record = $model->get($id);
 
-        $result = [
-            'id' => $record->id,
-            'name' => $record->name,
-            'birthDay' => new DateTime($record->birth_day->format('Y-m-d')),
-            'height' => $record->height,
-            'gender' => $record->gender,
-        ];
-
-        return $result;
+        return $this->buildEntity($record);
     }
 
     /**
      * DB へユーザー保存
      *
      * @param array{type: string, name: string, birthDay: \DateTime, height: string, gender: string} $command
-     * @return int
+     * @return array{id: int, name: string, birthDay: \DateTime, height: string, gender: string}
      */
-    public function saveUser(array $command): int
+    public function saveUser(array $command): array
     {
         /** @var \App\Model\Table\SampleUsersTable $model */
         $model = TableRegistry::getTableLocator()->get('SampleUsers');
@@ -136,17 +123,16 @@ final class SampleUserRepository
         $entity->gender = $command['gender'];
         $saved = $model->saveOrFail($entity);
 
-        // 保存後に採番された ID を返す
-        return $saved->id;
+        return $this->buildEntity($saved);
     }
 
     /**
      * DB へユーザー更新
      *
      * @param array{type: string, id: int, name: string, birthDay: \DateTime, height: string, gender: string} $command
-     * @return void
+     * @return array{id: int, name: string, birthDay: \DateTime, height: string, gender: string}
      */
-    public function updateUser(array $command): void
+    public function updateUser(array $command): array
     {
         /** @var \App\Model\Table\SampleUsersTable $model */
         $model = TableRegistry::getTableLocator()->get('SampleUsers');
@@ -155,7 +141,9 @@ final class SampleUserRepository
         $entity->birth_day = new Date($command['birthDay']->format('Y-m-d'));
         $entity->height = $command['height'];
         $entity->gender = $command['gender'];
-        $model->saveOrFail($entity);
+        $saved = $model->saveOrFail($entity);
+
+        return $this->buildEntity($saved);
     }
 
     /**
@@ -170,6 +158,25 @@ final class SampleUserRepository
         $model = TableRegistry::getTableLocator()->get('SampleUsers');
         $entity = $model->get($id);
         $model->deleteOrFail($entity);
+    }
+
+    /**
+     * エンティティを組み立てる
+     *
+     * @param \App\Model\Entity\SampleUser $entity
+     * @return array{id: int, name: string, birthDay: \DateTime, height: string, gender: string}
+     */
+    private function buildEntity(SampleUser $entity): array
+    {
+        $result = [
+            'id' => $entity->id,
+            'name' => $entity->name,
+            'birthDay' => new DateTime($entity->birth_day->format('Y-m-d')),
+            'height' => $entity->height,
+            'gender' => $entity->gender,
+        ];
+
+        return $result;
     }
 
     /**
