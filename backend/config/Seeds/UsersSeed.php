@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Cake\I18n\DateTime;
 use Migrations\BaseSeed;
 
 /**
@@ -20,9 +22,29 @@ class UsersSeed extends BaseSeed
      */
     public function run(): void
     {
-        $data = [];
+        $data = [
+            [
+                'email' => 'admin@example.com',
+                'password' => $this->_setPassword('admin00'),
+                'created' => DateTime::now(),
+                'modified' => DateTime::now(),
+            ],
+        ];
 
         $table = $this->table('users');
         $table->insert($data)->save();
+    }
+
+    /**
+     * パスワードを生成する
+     *
+     * @param string $password パスワード
+     * @return string ハッシュ化されたパスワード
+     */
+    private function _setPassword(string $password): string
+    {
+        $hasher = new DefaultPasswordHasher();
+
+        return $hasher->hash($password);
     }
 }
