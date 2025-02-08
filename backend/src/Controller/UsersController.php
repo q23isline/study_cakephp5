@@ -15,12 +15,13 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function login()
     {
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        if ($result?->isValid()) {
             $this->Flash->success(__('Login successful'));
             $redirect = $this->Authentication->getLoginRedirect();
             if ($redirect) {
