@@ -62,6 +62,9 @@ return function (RouteBuilder $routes): void {
          */
         $builder->connect('/pages/*', 'Pages::display');
 
+        $builder->connect('/users/login', ['controller' => 'Users', 'action' => 'login']);
+        $builder->connect('/users/logout', ['controller' => 'Users', 'action' => 'logout']);
+
         /*
          * Connect catchall routes for all controllers.
          *

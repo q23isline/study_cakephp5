@@ -25,6 +25,8 @@ use Cake\Controller\Controller;
  * will inherit them.
  *
  * @link https://book.cakephp.org/5/en/controllers.html#the-app-controller
+ * @property \Cake\Controller\Component\FlashComponent $Flash
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  */
 class AppController extends Controller
 {
@@ -48,5 +50,8 @@ class AppController extends Controller
          * see https://book.cakephp.org/5/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+
+        // Add this line to check authentication result and lock your site
+        $this->loadComponent('Authentication.Authentication');
     }
 }

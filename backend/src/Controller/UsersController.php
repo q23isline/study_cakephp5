@@ -45,8 +45,25 @@ class UsersController extends AppController
         }
 
         // Display error if user submitted and authentication failed
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') && !$result?->isValid()) {
             $this->Flash->error(__('Invalid username or password'));
+        }
+    }
+
+    /**
+     * ログアウトする
+     *
+     * @return \Cake\Http\Response|null|void
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public function logout()
+    {
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
+            $this->Authentication->logout();
+
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }
 }
