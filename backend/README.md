@@ -11,6 +11,7 @@ docker compose exec backend ./vendor/bin/phpcs --colors -p src/
 docker compose exec backend ./vendor/bin/phpcbf src/
 # コード静的解析実行
 docker compose exec backend ./vendor/bin/phpstan analyse
+docker compose exec backend ./vendor/bin/psalm
 ```
 
 ### Postman による API の動作確認
