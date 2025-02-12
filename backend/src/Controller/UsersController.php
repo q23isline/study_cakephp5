@@ -39,7 +39,7 @@ class UsersController extends AppController
         if ($result?->isValid()) {
             $this->Flash->success(__('Login successful'));
             $redirect = $this->Authentication->getLoginRedirect();
-            if ($redirect) {
+            if ($redirect !== null && $redirect !== '') {
                 return $this->redirect($redirect);
             }
         }

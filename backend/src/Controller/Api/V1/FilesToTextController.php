@@ -131,6 +131,7 @@ class FilesToTextController extends AppController
     {
         $timeStamp = date('YmdHis') . substr(explode('.', microtime(true) . '')[1], 0, 3);
         $extractToPath = TMP . 'file' . DS . 'toText' . DS . $timeStamp;
+        /** @var string $tmpName */
         $tmpName = $zipFile->getStream()->getMetadata('uri');
         $zip = new ZipArchive();
         $result = $zip->open($tmpName);

@@ -63,6 +63,7 @@ class SampleUserListGetController extends AppController
      * @param array{filterName: mixed, sort: mixed, pageNumber: mixed, pageSize: mixed} $params
      * @return void
      * @throws \App\Domain\Shared\Exception\ValidateException
+     * @psalm-suppress PrivateFinalMethod なぜか private メソッドに final 修飾子をつけるなエラーが出るため無視する
      */
     private function validate(array $params): void
     {
@@ -127,6 +128,7 @@ class SampleUserListGetController extends AppController
 
         $totalPage = ceil($collection['count'] / $command['pageSize']);
 
+        $parsedQuery = [];
         if (isset($command['filterName'])) {
             $parsedQuery['filter']['name'] = $command['filterName'];
         }
