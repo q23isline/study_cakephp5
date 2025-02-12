@@ -1,15 +1,39 @@
 <?xml version="1.0"?>
+<!-- https://psalm.dev/ -->
 <psalm
+    phpVersion="8.4"
     errorLevel="2"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    autoloader="config/bootstrap.php"
 >
     <projectFiles>
         <directory name="src/"/>
         <ignoreFiles>
             <directory name="vendor/"/>
+            <!-- CakePHP プロジェクト作成で自動生成されたファイルはエラーを無視する -->
+            <file name="src/Console/Installer.php"/>
+            <file name="src/Controller/PagesController.php"/>
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <LessSpecificImplementedReturnType>
+            <errorLevel type="suppress">
+                <!-- モデル生成コマンドで出力されたコードがエラーになる内容は無視する -->
+                <directory name="src/Model/Table/" />
+            </errorLevel>
+        </LessSpecificImplementedReturnType>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <!-- CakePHP の MVC は CakePHP が動的に利用していて Psalm からでは利用しているクラスと検知できないので無視 -->
+                <file name="src/Application.php" />
+                <directory name="src/Controller/" />
+                <directory name="src/Model/Entity/" />
+                <directory name="src/Model/Table/" />
+                <directory name="src/View/" />
+            </errorLevel>
+        </UnusedClass>
+    </issueHandlers>
 </psalm>
