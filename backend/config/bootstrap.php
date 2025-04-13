@@ -64,11 +64,14 @@ require CAKE . 'functions.php';
  * for more information for recommended practices.
 */
 if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
-    $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
-    $dotenv->parse()
-        ->putenv()
-        ->toEnv()
-        ->toServer();
+    // 本番想定での composer install して CakePHP を動かしたときに Fatal エラーにならないように、パッケージの存在チェックを行う
+    if (class_exists(\josegonzalez\Dotenv\Loader::class)) {
+        $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+        $dotenv->parse()
+            ->putenv()
+            ->toEnv()
+            ->toServer();
+    }
 }
 
 /*
