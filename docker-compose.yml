@@ -24,7 +24,7 @@ services:
     volumes:
       - ./backend:/src
       # https://windows.php.net/download#php-8.4
-      - ./docker/local/php/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/local/php/php.ini:/etc/php.d/php.ini
     depends_on:
       - db
   db:
