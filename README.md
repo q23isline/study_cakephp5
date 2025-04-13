@@ -44,6 +44,7 @@ CakePHP 5 勉強用リポジトリ
 3. 開発準備
 
     ```bash
+    rm -f .dockerignore
     cp .vscode/extensions.json.default .vscode/extensions.json
     cp .vscode/launch.json.default .vscode/launch.json
     cp .vscode/settings.json.default .vscode/settings.json
@@ -125,8 +126,42 @@ sudo chmod -R 777 backend/vendor frontend/node_modules
 
 ## ログ出力場所
 
-| サービス   | ログ出力場所  |
-| ---------- | ------------- |
-| CakePHP    | backend/logs  |
-| SQL Server | logs/db       |
-| Node.js    | logs/frontend |
+| サービス                | ログ出力場所  |
+| ----------------------- | ------------- |
+| CakePHP (開発)          | backend/logs  |
+| SQL Server (開発・本番) | logs/db       |
+| Node.js (開発)          | logs/frontend |
+| CakePHP (本番)          | logs/backend  |
+| NGINX・PHP-FPM (本番)   | logs/web      |
+
+## 本番想定でのアプリ立ち上げ
+
+1. 本番想定のアプリ起動準備
+
+    ```bash
+    cp docker/prod/amazon_linux/nginx/ssl/server.crt.default docker/prod/amazon_linux/nginx/ssl/server.crt
+    cp docker/prod/amazon_linux/nginx/ssl/server.csr.default docker/prod/amazon_linux/nginx/ssl/server.csr
+    cp docker/prod/amazon_linux/nginx/ssl/server.key.default docker/prod/amazon_linux/nginx/ssl/server.key
+    cp .dockerignore.prod-default .dockerignore
+    ```
+
+2. アプリ立ち上げ
+
+    ```bash
+    cd study_cakephp5
+    docker compose -f docker-compose-prod.yml build
+    docker compose -f docker-compose-prod.yml up -d
+    docker compose exec app-prod bin/cake migrations migrate
+    docker compose exec app-prod bin/cake migrations seed
+    sudo chmod -R ugo+rw logs
+    ```
+
+### 本番想定での URL
+
+<http://localhost>
+
+## 本番想定でのアプリ終了
+
+```bash
+docker compose -f docker-compose-prod.yml down
+```
