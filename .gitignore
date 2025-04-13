@@ -1,12 +1,23 @@
 # ログファイル
 !/logs/
 /logs/*
+!/logs/backend/
+/logs/backend/*
+!/logs/backend/.gitkeep
 !/logs/db/
 /logs/db/*
 !/logs/db/.gitkeep
 !/logs/frontend/
 /logs/frontend/*
 !/logs/frontend/.gitkeep
+!/logs/web/
+/logs/web/*
+!/logs/web/nginx/
+/logs/web/nginx/*
+!/logs/web/nginx/.gitkeep
+!/logs/web/php-fpm/
+/logs/web/php-fpm/*
+!/logs/web/php-fpm/.gitkeep
 
 # VSCode 設定
 !/.vscode/
@@ -14,3 +25,14 @@
 !/.vscode/extensions.json.default
 !/.vscode/launch.json.default
 !/.vscode/settings.json.default
+
+# 機密情報
+!/docker/prod/amazon_linux/nginx/ssl/
+/docker/prod/amazon_linux/nginx/ssl/*
+!/docker/prod/amazon_linux/nginx/ssl/server.crt.default
+!/docker/prod/amazon_linux/nginx/ssl/server.csr.default
+!/docker/prod/amazon_linux/nginx/ssl/server.key.default
+
+# ローカル開発では Docker コンテナへ vendor ディレクトリコピー無視したくないので無視リストに追加する
+# 静的解析パッケージをコピーして実行したいため
+.dockerignore

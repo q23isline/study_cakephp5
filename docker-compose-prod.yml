@@ -1,0 +1,41 @@
+volumes:
+  db-data-prod:
+
+# TODO: 実行ユーザーをそれぞれのコンテナで root から変える
+services:
+  app-prod:
+    build:
+      context: .
+      dockerfile: docker/prod/amazon_linux/Dockerfile
+      args:
+        VITE_API_BASE_URL: "/"
+    container_name: app-prod
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./logs/backend:/var/www/localhost/publish/logs
+      - ./logs/web/nginx:/var/www/localhost/log
+      - ./logs/web/php-fpm:/var/log/php-fpm
+    command: ["/bin/bash", "-c", "chmod +x /entrypoint.sh && /entrypoint.sh"]
+    depends_on:
+      - db
+  db:
+    build:
+      context: .
+      dockerfile: docker/prod/mssql/Dockerfile
+    container_name: db
+    user: root
+    ports:
+      - 1433:1433
+    environment:
+      - MSSQL_SA_PASSWORD=Passw0rd
+    volumes:
+      - ./logs/db:/var/opt/mssql/log
+      - db-data-prod:/var/opt/mssql
+    command:
+      [
+        "/bin/bash",
+        "-c",
+        "chmod +x /usr/src/app/entrypoint.sh && /usr/src/app/entrypoint.sh",
+      ]
