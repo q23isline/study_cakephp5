@@ -65,6 +65,9 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/users/login', ['controller' => 'Users', 'action' => 'login']);
         $builder->connect('/users/logout', ['controller' => 'Users', 'action' => 'logout']);
 
+        // SPA 用のすべてのルーティングをキャッチする
+        $builder->connect('/*', ['controller' => 'pages', 'action' => 'index']);
+
         /*
          * Connect catchall routes for all controllers.
          *

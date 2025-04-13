@@ -37,6 +37,26 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class PagesController extends AppController
 {
     /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Http\Exception\NotFoundException
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public function index()
+    {
+        $path = WWW_ROOT . 'index.html';
+        if (!file_exists($path)) {
+            throw new NotFoundException('Vue app not found');
+        }
+
+        return $this->response->withFile($path, [
+            'type' => 'text/html',
+            'cache' => true,
+        ]);
+    }
+
+    /**
      * Displays a view
      *
      * @param string ...$path Path segments.
