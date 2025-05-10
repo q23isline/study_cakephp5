@@ -6,9 +6,9 @@
 
 ```bash
 # フォーマッターチェック実行
-docker compose exec backend ./vendor/bin/phpcs --colors -p src/
+docker compose exec backend ./vendor/bin/phpcs --colors -p
 # フォーマッター自動整形実行
-docker compose exec backend ./vendor/bin/phpcbf src/
+docker compose exec backend ./vendor/bin/phpcbf
 # コード静的解析実行
 docker compose exec backend ./vendor/bin/phpstan analyse
 docker compose exec backend ./vendor/bin/psalm
