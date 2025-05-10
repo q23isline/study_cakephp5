@@ -1,0 +1,49 @@
+name: BackendCI
+
+on:
+  push:
+    branches: ["main", "develop"]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: ["main", "develop"]
+    paths:
+      - "backend/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  coding-standard:
+    name: PHP Coding Standard & Static Analysis
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: mbstring, intl
+          coverage: none
+          tools: cs2pr, phpstan:2.1.1, psalm:6.5.1
+
+      - name: Composer install
+        uses: ramsey/composer-install@v3
+        with:
+          working-directory: ./backend
+
+      - name: Run PHP CodeSniffer
+        run: vendor/bin/phpcs --report=checkstyle | cs2pr
+
+      - name: Run phpstan
+        if: always()
+        run: phpstan
+
+      - name: Run psalm
+        run: psalm
