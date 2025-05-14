@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\View\JsonView;
 
 /**
  * Application Controller
@@ -53,5 +54,29 @@ class AppController extends Controller
 
         // Add this line to check authentication result and lock your site
         $this->loadComponent('Authentication.Authentication');
+    }
+
+    /**
+     * Get the View classes this controller can perform content negotiation with.
+     *
+     * Each view class must implement the `getContentType()` hook method
+     * to participate in negotiation.
+     *
+     * AppController で定義しないと API の 401 エラーレスポンスの Content-Type が application/json にできないので
+     * ここで定義する
+     *
+     * @see \Cake\Http\ContentTypeNegotiation
+     * @link https://book.cakephp.org/5/en/views/json-and-xml-views.html
+     * @return list<string>
+     */
+    public function viewClasses(): array
+    {
+        $path = $this->request->getUri()->getPath();
+        $isApi = (strpos($path, '/api/') === 0);
+        if ($isApi) {
+            return [JsonView::class];
+        } else {
+            return parent::viewClasses();
+        }
     }
 }
