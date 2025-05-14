@@ -39,6 +39,11 @@ const router = createRouter({
       component: () => import('../views/users/UserEditView.vue'),
       props: (route) => ({ userId: Number(route.params.userId) }),
     },
+    {
+      path: '/:notFound(.*)',
+      name: 'NotFoundError',
+      component: () => import('../views/errors/NotFoundErrorView.vue'),
+    },
   ],
 })
 
