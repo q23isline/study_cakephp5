@@ -14,8 +14,10 @@ return [
      *
      * Development Mode:
      * true: Errors and warnings shown.
+     *
+     * ここで false を指定しておかないと本番想定の時にデバッグを OFF にできない。（環境変数を反映してくれない）
      */
-    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+    'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
 
     /*
      * Security and encryption configuration

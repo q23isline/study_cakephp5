@@ -39,8 +39,7 @@ FROM amazonlinux:2023
 ENV TZ=Asia/Tokyo
 # この指定がないと backend/config/bootstrap.php で開発用のパッケージを読もうとしてエラーになる
 ENV APP_NAME=Study_CakePHP5
-# backend/config/.env に指定していた内容をここで指定する
-ENV DEBUG=false
+# backend/config/.env に指定していた内容をここで指定する（ DEBUG=false を指定しても反映されないので指定しない）
 ENV APP_ENCODING=UTF-8
 ENV APP_DEFAULT_LOCALE=ja_JP
 ENV APP_DEFAULT_TIMEZONE=Asia/Tokyo
