@@ -4,24 +4,12 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1;
 
 use App\ApplicationService\SampleUsers\ListGetApplicationService;
-use App\Controller\AppController;
+use App\Controller\Api\AppApiController;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\ValidateException;
 
-class SampleUserListGetController extends AppController
+class SampleUserListGetController extends AppApiController
 {
-    /**
-     * initialize
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->viewBuilder()->setClassName('Json')->setOption('serialize', true);
-    }
-
     /**
      * @return void
      */

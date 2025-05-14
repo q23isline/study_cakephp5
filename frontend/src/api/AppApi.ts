@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8765'
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8765/'
 
 let csrfToken = ''
 
@@ -30,5 +30,17 @@ AppApi.interceptors.request.use((config) => {
 
   return config
 })
+
+AppApi.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // vue-router を利用すると Vue の警告が出るため JS で直接リダイレクトする
+      // ローカル環境だと FE と BE のポート違いで元の画面に戻れないが、本番では同じドメインなので戻れる
+      window.location.href = `${baseURL}users/login?redirect=${encodeURIComponent(location.pathname)}`
+    }
+    return Promise.reject(error)
+  },
+)
 
 initializeCsrfToken()

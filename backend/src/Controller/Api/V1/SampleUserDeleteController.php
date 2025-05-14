@@ -4,23 +4,11 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1;
 
 use App\ApplicationService\SampleUsers\DeleteApplicationService;
-use App\Controller\AppController;
+use App\Controller\Api\AppApiController;
 use App\Domain\Shared\Exception\NotFoundException;
 
-class SampleUserDeleteController extends AppController
+class SampleUserDeleteController extends AppApiController
 {
-    /**
-     * initialize
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->viewBuilder()->setClassName('Json')->setOption('serialize', true);
-    }
-
     /**
      * @return void
      */

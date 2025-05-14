@@ -5,25 +5,13 @@ namespace App\Controller\Api\V1;
 
 use App\ApplicationService\SampleUsers\AddApplicationService;
 use App\ApplicationService\Shared\DateValidator;
-use App\Controller\AppController;
+use App\Controller\Api\AppApiController;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\ValidateException;
 use DateTime;
 
-class SampleUserAddController extends AppController
+class SampleUserAddController extends AppApiController
 {
-    /**
-     * initialize
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->viewBuilder()->setClassName('Json')->setOption('serialize', true);
-    }
-
     /**
      * @return void
      */

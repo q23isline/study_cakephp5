@@ -72,6 +72,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         $middlewareQueue
+            // ローカル環境であれば CORS 設定すべて許可する
+            // 先頭に記載しないと 401エラーレスポンスが CORS エラーで JS が解釈できない
+            ->add(new CorsMiddleware())
+
             // Catch any exceptions in the lower layers,
             // and make an error page/response
             ->add(new ErrorHandlerMiddleware(Configure::read('Error'), $this))
@@ -92,18 +96,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/5/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware())
 
-            // Cross Site Request Forgery (CSRF) Protection Middleware
-            // https://book.cakephp.org/5/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
-            ->add(new CsrfProtectionMiddleware([
-                'httponly' => true,
-            ]))
-
             // Add the AuthenticationMiddleware. It should be after routing and body parser.
             // https://book.cakephp.org/5/en/tutorials-and-examples/cms/authentication.html
             ->add(new AuthenticationMiddleware($this))
 
-            // ローカル環境であれば CORS 設定すべて許可する
-            ->add(new CorsMiddleware());
+            // Cross Site Request Forgery (CSRF) Protection Middleware
+            // https://book.cakephp.org/5/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
+            ->add(new CsrfProtectionMiddleware([
+                'httponly' => true,
+            ]));
 
         return $middlewareQueue;
     }
@@ -128,10 +129,18 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => Router::url('/users/login'),
-            'queryParam' => 'redirect',
-        ]);
+        $path = $request->getUri()->getPath();
+        $isApi = (strpos($path, '/api/') === 0);
+
+        if ($isApi) {
+            // API のときはログイン画面にリダイレクトしない
+            $authenticationService = new AuthenticationService();
+        } else {
+            $authenticationService = new AuthenticationService([
+                'unauthenticatedRedirect' => Router::url('/users/login'),
+                'queryParam' => 'redirect',
+            ]);
+        }
 
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [

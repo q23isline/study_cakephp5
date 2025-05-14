@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api\V1;
 
-use App\Controller\AppController;
+use App\Controller\Api\AppApiController;
 use Cake\Utility\Text;
 use Exception;
 use Laminas\Diactoros\UploadedFile;
@@ -14,20 +14,8 @@ use Smalot\PdfParser\Parser;
 use SplFileInfo;
 use ZipArchive;
 
-class FilesToTextController extends AppController
+class FilesToTextController extends AppApiController
 {
-    /**
-     * initialize
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->viewBuilder()->setClassName('Json')->setOption('serialize', true);
-    }
-
     /**
      * @return void
      */
