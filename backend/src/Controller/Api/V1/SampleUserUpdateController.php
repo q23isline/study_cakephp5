@@ -5,26 +5,14 @@ namespace App\Controller\Api\V1;
 
 use App\ApplicationService\SampleUsers\UpdateApplicationService;
 use App\ApplicationService\Shared\DateValidator;
-use App\Controller\AppController;
+use App\Controller\Api\AppApiController;
 use App\Domain\Shared\Exception\ExceptionItem;
 use App\Domain\Shared\Exception\NotFoundException;
 use App\Domain\Shared\Exception\ValidateException;
 use DateTime;
 
-class SampleUserUpdateController extends AppController
+class SampleUserUpdateController extends AppApiController
 {
-    /**
-     * initialize
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-
-        $this->viewBuilder()->setClassName('Json')->setOption('serialize', true);
-    }
-
     /**
      * @return void
      */
