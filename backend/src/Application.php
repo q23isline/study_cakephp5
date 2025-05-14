@@ -129,10 +129,18 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => Router::url('/users/login'),
-            'queryParam' => 'redirect',
-        ]);
+        $path = $request->getUri()->getPath();
+        $isApi = (strpos($path, '/api/') === 0);
+
+        if ($isApi) {
+            // API のときはログイン画面にリダイレクトしない
+            $authenticationService = new AuthenticationService();
+        } else {
+            $authenticationService = new AuthenticationService([
+                'unauthenticatedRedirect' => Router::url('/users/login'),
+                'queryParam' => 'redirect',
+            ]);
+        }
 
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [
