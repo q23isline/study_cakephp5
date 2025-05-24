@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\Http\CallbackStream;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
@@ -36,6 +37,19 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
  */
 class PagesController extends AppController
 {
+    /**
+     * @param \Cake\Event\EventInterface<\Cake\Controller\Controller> $event
+     * @return void
+     * @link https://book.cakephp.org/5/en/tutorials-and-examples/cms/authentication.html
+     */
+    public function beforeFilter(EventInterface $event): void
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['index']);
+    }
+
     /**
      * Index method
      *
