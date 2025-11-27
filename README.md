@@ -117,6 +117,8 @@ sudo chmod -R 777 backend/vendor frontend/node_modules
 
 ## データベースへの接続
 
+### SQL Server の場合
+
 | 項目名                   | 設定値          |
 | ------------------------ | --------------- |
 | サーバー名               | 127.0.0.1       |
@@ -124,6 +126,14 @@ sudo chmod -R 777 backend/vendor frontend/node_modules
 | ユーザー名               | sa              |
 | パスワード               | Passw0rd        |
 | サーバー証明書を信頼する | ON              |
+
+### MySQL の場合
+
+| 項目名     | 設定値    |
+| ---------- | --------- |
+| サーバー名 | 127.0.0.1 |
+| ユーザー名 | root      |
+| パスワード | Passw0rd  |
 
 ## ログ出力場所
 
