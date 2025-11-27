@@ -44,9 +44,11 @@ return [
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
-            'port' => '1433',
+            // 'port' => '1433', // SQL Server の場合
+            'port' => '3306', // MySQL の場合
 
-            'username' => 'sa',
+            // 'username' => 'sa', // SQL Server の場合
+            'username' => 'root', // MySQL の場合
             'password' => 'Passw0rd',
 
             'database' => 'StudyCakePHP',
@@ -61,9 +63,10 @@ return [
              */
             'url' => env('DATABASE_URL', null),
 
+            // SQL Server の場合
             // DB にアクセスできないのでローカルでは証明書の検証を無効にする
             // 本番などでは自己署名証明書を使用するなどで回避する
-            'trustServerCertificate' => true,
+            // 'trustServerCertificate' => true,
         ],
 
         /*

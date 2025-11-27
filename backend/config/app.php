@@ -2,6 +2,7 @@
 
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
+use Cake\Database\Driver\Mysql;
 use Cake\Database\Driver\Sqlserver;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
@@ -280,14 +281,16 @@ return [
          */
         'default' => [
             'className' => Connection::class,
-            'driver' => Sqlserver::class,
+            // 'driver' => Sqlserver::class, // SQL Server の場合
+            'driver' => Mysql::class, // MySQL の場合
             'persistent' => false,
             'timezone' => 'UTC',
 
             /*
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support
              */
-            'encoding' => PDO::SQLSRV_ENCODING_UTF8,
+            // 'encoding' => PDO::SQLSRV_ENCODING_UTF8, // SQL Server の場合
+            'encoding' => 'utf8mb4', // MySQL の場合
 
             /*
              * If your MySQL server is configured with `skip-character-set-client-handshake`
@@ -323,7 +326,8 @@ return [
          */
         'test' => [
             'className' => Connection::class,
-            'driver' => Sqlserver::class,
+            // 'driver' => Sqlserver::class, // SQL Server の場合
+            'driver' => Mysql::class, // MySQL の場合
             'persistent' => false,
             'timezone' => 'UTC',
             'encoding' => 'utf8mb4',

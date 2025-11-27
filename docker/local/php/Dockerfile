@@ -18,16 +18,20 @@ RUN dnf install -y php8.4-intl
 # pecl に必要なライブラリ
 RUN dnf install -y php-pear php8.4-devel
 
+# SQL Server の場合
 # https://www.php.net/manual/ja/ref.pdo-sqlsrv.php
 # https://learn.microsoft.com/ja-jp/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-ver16#installing-on-ubuntu-with-php-fpm
 # https://learn.microsoft.com/ja-jp/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline#18
-RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/pki/rpm-gpg/microsoft-prod.gpg
-RUN printf "[packages-microsoft-com-prod]\nname=packages-microsoft-com-prod\nbaseurl=https://packages.microsoft.com/rhel/9/prod/\nenabled=1\ngpgcheck=1\ngpgkey=file:///etc/pki/rpm-gpg/microsoft-prod.gpg" | tee /etc/yum.repos.d/microsoft-prod.repo
-RUN ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18 unixODBC-devel
-RUN pecl channel-update pecl.php.net
-RUN pecl install sqlsrv pdo_sqlsrv
-RUN echo "extension=sqlsrv.so" >> /etc/php.ini
-RUN echo "extension=pdo_sqlsrv.so" | tee /etc/php.d/30-pdo_sqlsrv.ini
+# RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /etc/pki/rpm-gpg/microsoft-prod.gpg
+# RUN printf "[packages-microsoft-com-prod]\nname=packages-microsoft-com-prod\nbaseurl=https://packages.microsoft.com/rhel/9/prod/\nenabled=1\ngpgcheck=1\ngpgkey=file:///etc/pki/rpm-gpg/microsoft-prod.gpg" | tee /etc/yum.repos.d/microsoft-prod.repo
+# RUN ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18 unixODBC-devel
+# RUN pecl channel-update pecl.php.net
+# RUN pecl install sqlsrv pdo_sqlsrv
+# RUN echo "extension=sqlsrv.so" >> /etc/php.ini
+# RUN echo "extension=pdo_sqlsrv.so" | tee /etc/php.d/30-pdo_sqlsrv.ini
+
+# MySQL の場合
+RUN dnf install -y php-mysqlnd
 
 # PHPSpreadSheet を動かせるようにする
 # https://phpspreadsheet.readthedocs.io/en/latest/

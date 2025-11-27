@@ -1,5 +1,6 @@
 volumes:
-  db-data:
+  # db-data: # SQL Server の場合
+  db-mysql-data: # MySQL の場合
 
 services:
   frontend:
@@ -27,22 +28,40 @@ services:
       - ./docker/local/php/php.ini:/etc/php.d/php.ini
     depends_on:
       - db
+  # SQL Server の場合
+  # db:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/local/mssql/Dockerfile
+  #   container_name: db
+  #   user: root
+  #   ports:
+  #     - 1433:1433
+  #   environment:
+  #     - MSSQL_SA_PASSWORD=Passw0rd
+  #   volumes:
+  #     - ./logs/db:/var/opt/mssql/log
+  #     - db-data:/var/opt/mssql
+  #   command:
+  #     [
+  #       "/bin/bash",
+  #       "-c",
+  #       "chmod +x /usr/src/app/entrypoint.sh && /usr/src/app/entrypoint.sh",
+  #     ]
+  # MySQL の場合
   db:
     build:
       context: .
-      dockerfile: docker/local/mssql/Dockerfile
+      dockerfile: docker/local/mysql/Dockerfile
     container_name: db
-    user: root
     ports:
-      - 1433:1433
+      - 3306:3306
     environment:
-      - MSSQL_SA_PASSWORD=Passw0rd
+      - MYSQL_DATABASE=StudyCakePHP
+      - MYSQL_USER=default
+      - MYSQL_PASSWORD=Passw0rd
+      - MYSQL_ROOT_PASSWORD=Passw0rd
     volumes:
-      - ./logs/db:/var/opt/mssql/log
-      - db-data:/var/opt/mssql
-    command:
-      [
-        "/bin/bash",
-        "-c",
-        "chmod +x /usr/src/app/entrypoint.sh && /usr/src/app/entrypoint.sh",
-      ]
+      - ./logs/db:/var/log/mysql
+      - db-mysql-data:/var/lib/mysql
+    command: --authentication_policy=mysql_native_password
