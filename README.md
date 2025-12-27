@@ -10,6 +10,7 @@
 [![PHP](https://img.shields.io/static/v1?logo=php&label=PHP&message=v8.4.3&labelColor=555555&color=777BB4&logoColor=777BB4)](https://www.php.net)
 [![CakePHP](https://img.shields.io/static/v1?logo=cakephp&label=CakePHP&message=v5.1.5&labelColor=555555&color=D33C43&logoColor=D33C43)](https://cakephp.org)
 [![SQL Server](https://img.shields.io/static/v1?label=SQL%20Server&message=v2022&labelColor=555555&color=FFFFFF&logoColor=FFFFFF)](https://learn.microsoft.com/ja-jp/sql/sql-server/)
+[![MySQL](https://img.shields.io/static/v1?logo=mysql&label=MySQL&message=v9.0&labelColor=555555&color=4479A1&logoColor=4479A1)](https://dev.mysql.com)
 [![Node.js](https://img.shields.io/static/v1?logo=node.js&label=Node.js&message=v22.12.0&labelColor=555555&color=339933&logoColor=339933)](https://nodejs.org)
 [![npm](https://img.shields.io/static/v1?logo=npm&label=npm&message=v10.9.0&labelColor=555555&color=CB3837&logoColor=CB3837)](https://www.npmjs.com/)
 [![Vue.js](https://img.shields.io/static/v1?logo=vue.js&label=Vue.js&message=v3.13.0&labelColor=555555&color=4FC08D&logoColor=4FC08D)](https://ja.vuejs.org/)
@@ -56,6 +57,9 @@ CakePHP 5 勉強用リポジトリ
 4. アプリ立ち上げ
 
     ```bash
+    # MySQL の場合
+    sudo chmod 644 docker/local/mysql/etc-mysql.cnf
+
     docker compose build
     sudo chmod -R ugo+rw ./
     docker compose up -d
