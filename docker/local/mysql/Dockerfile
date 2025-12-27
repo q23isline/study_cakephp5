@@ -1,4 +1,4 @@
-FROM mysql:8.3
+FROM mysql:9.0
 
 # タイムゾーンを設定（日本）
 ENV TZ=Asia/Tokyo
