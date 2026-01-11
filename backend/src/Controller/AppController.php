@@ -54,6 +54,18 @@ class AppController extends Controller
 
         // Add this line to check authentication result and lock your site
         $this->loadComponent('Authentication.Authentication');
+
+        $method = $this->request->getMethod();
+        $url = $this->request->getRequestTarget();
+        $originalBody = $this->request->getData();
+        if (empty($originalBody)) {
+            $this->log("{$method} {$url}", 'debug');
+        } else {
+            // TODO: パスワードなどの機密情報はマスク unset してログに出さないようにする
+            $body = json_encode($originalBody);
+
+            $this->log("{$method} {$url} {$body}", 'debug');
+        }
     }
 
     /**
