@@ -22,6 +22,10 @@ services:
     container_name: backend
     ports:
       - 8765:8765
+    # この指定がないと WLS2 の Ubuntu に直接 Docker インストールで動かしている場合に PHP がデバッグできない
+    # Docker Desktop をインストールしていればなくても動くがあっても問題ない
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./backend:/src
       # https://windows.php.net/download#php-8.4
