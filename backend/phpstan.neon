@@ -8,7 +8,10 @@ parameters:
     paths:
         - src/
     ignoreErrors:
-        # bin/cake bake model でコード生成するとエラーがでるので無視する
         -
             identifier: missingType.iterableValue
-            path: src/Model/Table/
+            paths:
+                # bin/cake bake model でコード生成するとエラーがでるので無視する
+                - src/Model/Table/
+                # CakePHP ログフォーマッタークラスを継承するとメソッドオーバーライドでエラーになるので無視する
+                - src/Log/Formatter/CustomFormatter.php

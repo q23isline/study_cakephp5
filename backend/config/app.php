@@ -1,5 +1,6 @@
 <?php
 
+use App\Log\Formatter\CustomFormatter;
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
@@ -349,6 +350,9 @@ return [
             'url' => env('LOG_DEBUG_URL', null),
             'scopes' => null,
             'levels' => ['notice', 'info', 'debug'],
+            'formatter' => [
+                'className' => CustomFormatter::class,
+            ],
         ],
         'error' => [
             'className' => FileLog::class,
@@ -357,6 +361,9 @@ return [
             'url' => env('LOG_ERROR_URL', null),
             'scopes' => null,
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+            'formatter' => [
+                'className' => CustomFormatter::class,
+            ],
         ],
         // To enable this dedicated query log, you need to set your datasource's log flag to true
         'queries' => [
@@ -365,6 +372,9 @@ return [
             'file' => date('Y-m-d') . '_queries',
             'url' => env('LOG_QUERIES_URL', null),
             'scopes' => ['cake.database.queries'],
+            'formatter' => [
+                'className' => CustomFormatter::class,
+            ],
         ],
     ],
 
