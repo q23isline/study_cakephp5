@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Log\Formatter;
 
+use App\Application;
 use Cake\Log\Formatter\AbstractFormatter;
 use DateTime;
 
@@ -28,11 +29,15 @@ class CustomFormatter extends AbstractFormatter
     public function format(mixed $level, string $message, array $context = []): string
     {
         $message = $this->normalizeToSingleLine($message);
+        $pid = getmypid();
+        $clientIp = Application::getCurrentClientId() ?? '-';
+        $loginId = Application::getCurrentUserId() ?? '-';
 
         if ($this->_config['includeDate']) {
-            $message = sprintf('%s %s: %s', (new DateTime())->format($this->_config['dateFormat']), $level, $message);
+            $now = (new DateTime())->format($this->_config['dateFormat']);
+            $message = sprintf('%s %s: [%s] %s %s %s', $now, $level, $pid, $clientIp, $loginId, $message);
         } else {
-            $message = sprintf('%s: %s', $level, $message);
+            $message = sprintf('%s: [%s] %s %s %s', $level, $pid, $clientIp, $loginId, $message);
         }
         if ($this->_config['includeTags']) {
             return sprintf('<%s>%s</%s>', $level, $message, $level);

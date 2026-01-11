@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Middleware\CorsMiddleware;
+use App\Middleware\LogRequestMiddleware;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -45,6 +46,16 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
+    /**
+     * @var string|null
+     */
+    private static ?string $currentClientId = null;
+
+    /**
+     * @var string|null
+     */
+    private static ?string $currentUserId = null;
+
     /**
      * Load all the application configuration and bootstrap logic.
      *
@@ -99,6 +110,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // Add the AuthenticationMiddleware. It should be after routing and body parser.
             // https://book.cakephp.org/5/en/tutorials-and-examples/cms/authentication.html
             ->add(new AuthenticationMiddleware($this))
+
+            // ログにリクエスト IPアドレス、ログインID を書き出すためにそれぞれを取得するミドルウェア
+            ->add(new LogRequestMiddleware())
 
             // Cross Site Request Forgery (CSRF) Protection Middleware
             // https://book.cakephp.org/5/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
@@ -162,5 +176,39 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         ]);
 
         return $authenticationService;
+    }
+
+    /**
+     * @param string|null $clientId
+     * @return void
+     */
+    public static function setCurrentClientId(?string $clientId): void
+    {
+        self::$currentClientId = $clientId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function getCurrentClientId(): ?string
+    {
+        return self::$currentClientId;
+    }
+
+    /**
+     * @param string|null $userId
+     * @return void
+     */
+    public static function setCurrentUserId(?string $userId): void
+    {
+        self::$currentUserId = $userId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function getCurrentUserId(): ?string
+    {
+        return self::$currentUserId;
     }
 }
