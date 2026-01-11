@@ -3,7 +3,6 @@
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
-use Cake\Database\Driver\Sqlserver;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
@@ -346,7 +345,7 @@ return [
         'debug' => [
             'className' => FileLog::class,
             'path' => LOGS,
-            'file' => 'debug',
+            'file' => date('Y-m-d') . '_debug',
             'url' => env('LOG_DEBUG_URL', null),
             'scopes' => null,
             'levels' => ['notice', 'info', 'debug'],
@@ -354,7 +353,7 @@ return [
         'error' => [
             'className' => FileLog::class,
             'path' => LOGS,
-            'file' => 'error',
+            'file' => date('Y-m-d') . '_error',
             'url' => env('LOG_ERROR_URL', null),
             'scopes' => null,
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
@@ -363,7 +362,7 @@ return [
         'queries' => [
             'className' => FileLog::class,
             'path' => LOGS,
-            'file' => 'queries',
+            'file' => date('Y-m-d') . '_queries',
             'url' => env('LOG_QUERIES_URL', null),
             'scopes' => ['cake.database.queries'],
         ],
